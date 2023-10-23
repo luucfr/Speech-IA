@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  train-speech:
+    build:
+      context: ./train-speech/.
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./train-speech/out:/home/out
+      - ./train-speech/mp3:/home/mp3
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['0']
+              capabilities: [gpu]
+    #restart: on-failure
