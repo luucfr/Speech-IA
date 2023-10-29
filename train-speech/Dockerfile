@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
 
 WORKDIR /home
 
@@ -11,9 +11,5 @@ RUN pip3 install huggingsound
 RUN pip3 install --force-reinstall torch torchvision torchaudio
 RUN pip3 install accelerate -U
 
-ARG NCCL_P2P_DISABLE=1
-ARG CUDA_VISIBLE_DEVICES=0
-ARG PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
-
-CMD [ "torchrun", "train.py" ]
-# CMD [ "torchrun", "--nproc_per_node", "1", "train.py" ]
+# CMD [ "torchrun", "train.py" ]
+CMD [ "torchrun", "--nproc_per_node", "1", "train.py" ]
